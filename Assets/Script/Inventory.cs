@@ -42,11 +42,11 @@ public class Inventory : MonoBehaviour
 		if (showInventory)
 		{
 			DrawInventory();
-		}
-		if (showToolTip) 
-		{
-			GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 200, 200), tooltip, skin.GetStyle("Tooltip"));
-		}
+			if (showToolTip) 
+			{
+				GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 200, 200), tooltip, skin.GetStyle("Tooltip"));
+			}
+		}		
 	}
 
 	void DrawInventory()
