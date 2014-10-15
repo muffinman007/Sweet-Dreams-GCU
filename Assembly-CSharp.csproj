@@ -50,6 +50,7 @@
      <Compile Include="Assets\Script\Item.cs" />
      <Compile Include="Assets\Script\ItemDataBase.cs" />
      <Compile Include="Assets\Script\MeanCarrotController.cs" />
+     <Compile Include="Assets\Script\SpinningProjectile.cs" />
      <Compile Include="Assets\Script\SpriteAnimation.cs" />
      <Compile Include="Assets\Script\movement.cs" />
   </ItemGroup>
