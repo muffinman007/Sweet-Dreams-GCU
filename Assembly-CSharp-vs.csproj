@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>G:/Unity4_3/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>F:/Unity4_3/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>G:/Unity4_3/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>F:/Unity4_3/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>

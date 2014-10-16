@@ -7,6 +7,7 @@ public class MeanCarrotController : MonoBehaviour{
 	public float minimumSecond = 1.0f;
 	public float maximumSecond = 2.0f;
 
+
 	// allow the ai to travel in the same direction at most 2 times in a row
 	int travelSameDirLimitor = 2;
 	byte[] travelLimitorArray = new byte[]{0, 0, 0, 0, 0};
@@ -137,7 +138,6 @@ public class MeanCarrotController : MonoBehaviour{
 		}
 
 
-
 	}
 
 	bool debugTestFireOnce = true;
@@ -149,7 +149,17 @@ public class MeanCarrotController : MonoBehaviour{
 			Instantiate(projectile,
 			            new Vector3(transform.position.x + 2, transform.position.y + 2, 0),
 			            Quaternion.identity);
+			Instantiate(projectile,
+			            new Vector3(transform.position.x + 1, transform.position.y + 4, 0),
+			            Quaternion.identity);
+			Instantiate(projectile,
+			            new Vector3(transform.position.x + 3.0f, transform.position.y + 2.5f, 0),
+			            Quaternion.identity);
+			Instantiate(projectile,
+			            new Vector3(transform.position.x + 2, transform.position.y + 1, 0),
+			            Quaternion.identity);
 			debugTestFireOnce = false;
 		}
+
 	}
 }
