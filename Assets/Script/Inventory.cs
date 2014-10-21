@@ -12,6 +12,9 @@ public class Inventory : MonoBehaviour
 	private ItemDataBase database;
 	private bool showToolTip;
 	private string tooltip;
+	private bool draggingItem;
+	private Item draggedItem;
+	private int prevIndex;
 
 	// Use this for initialization
 	void Start () 
@@ -46,11 +49,16 @@ public class Inventory : MonoBehaviour
 			{
 				GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 200, 200), tooltip, skin.GetStyle("Tooltip"));
 			}
-		}		
+		}
+		if (draggingItem)
+		{
+			GUI.DrawTexture(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 50, 50), draggedItem.itemIcon);
+		}
 	}
 
 	void DrawInventory()
 	{
+		Event e = Event.current;
 		int i = 0;
 
 		for (int y = 0; y < slotsY; y++)
@@ -64,12 +72,47 @@ public class Inventory : MonoBehaviour
 				if(slots[i].itemName != null)
 				{
 					GUI.DrawTexture(slotRect, slots[i].itemIcon);
-					if(slotRect.Contains(Event.current.mousePosition))
+					if(slotRect.Contains(e.mousePosition))
 					{
 						CreateToolTip(slots[i]);
 						showToolTip = true;
+						if (e.button == 0 && e.type == EventType.mouseDrag && !draggingItem)
+						{
+							draggingItem = true;
+							prevIndex = i;
+							draggedItem = slots[i];
+							inventory[i] = new Item();
+						}
+						if (e.type == EventType.mouseUp && draggingItem)
+						{
+							inventory[prevIndex] = inventory[i];
+							inventory[i] = draggedItem;
+							draggingItem = false;
+							draggedItem = null;
+						}
+
+						if (e.isMouse && e.type == EventType.MouseDown && e.button == 1)
+						{
+							if (slots[i].itemType == Item.ItemType.Consumable)
+							{
+								UseConsumable(slots[i], i, true);
+							}
+						}
 					}
 				}
+				else
+				{
+					if (slotRect.Contains(e.mousePosition))
+					{
+						if (e.type == EventType.mouseUp && draggingItem)
+						{
+							inventory[i] = draggedItem;
+							draggingItem = false;
+							draggedItem = null;
+						}
+					}
+				}
+
 				if(tooltip == "")
 				{
 					showToolTip = false;
@@ -97,7 +140,7 @@ public class Inventory : MonoBehaviour
 			}
 		}
 	}
-
+	
 	void AddItem(int id)
 	{
 		for (int i = 0; i < database.items.Count; i++) 
@@ -130,5 +173,22 @@ public class Inventory : MonoBehaviour
 			}
 		}
 		return result;
+	}
+
+	private void UseConsumable(Item item, int slot, bool deleteItem)
+	{
+		switch (item.itemID) 
+		{
+			case 2:
+			{
+				print ("item used");
+			break;
+			}
+
+			if (deleteItem)
+			{
+				inventory[slot] = new Item();
+			}
+		}
 	}
 }
