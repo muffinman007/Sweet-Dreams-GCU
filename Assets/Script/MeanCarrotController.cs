@@ -20,6 +20,11 @@ public class MeanCarrotController : MonoBehaviour{
 	float travelTime = 0.0f;
 
 
+	// to limit the rate of fire
+	public float rateOfFireTimer = 1.0f;
+	public float rateOfFireTime = 0.0f;
+	bool allowFiring = true;
+
 	const float distanceFromHero = 3.0f;
 	bool fire = false;
 
@@ -36,9 +41,23 @@ public class MeanCarrotController : MonoBehaviour{
 
 	
 	// Update is called once per frame
-	void Update (){
+	void Update(){
+		rateOfFireTime += Time.deltaTime;
+		if(rateOfFireTime >= rateOfFireTimer)
+			allowFiring = true;
+
+		// prevent rateOfFireTime to go pass 32 bit
+		if(rateOfFireTime > short.MaxValue)
+			rateOfFireTime = rateOfFireTimer + 1.0f;
+
 		if(fire){
-			FireProjectiles();
+			if(allowFiring){
+				FireProjectiles();
+				allowFiring = false;
+				rateOfFireTime = 0.0f;
+			}
+			fire = false;
+			travelTime = travelDirectionTimer + 1.0f;
 		}
 		else{
 			UpdateMovement();
@@ -126,13 +145,17 @@ public class MeanCarrotController : MonoBehaviour{
 
 		// if this enemy is within distanceFromHero unit then stop and start firing projectiles
 		if(Vector3.Distance(carrotLoc, boyLoc) <= distanceFromHero){
+
+
 			// have the enemy face the player
 			Vector3 temp = carrotLoc - boyLoc;
-			if(temp.x <= 0)
+			if(temp.x <= 0.0f && temp.y >= 0.0f)
 				SpriteAnimation.currentTravelDirection = SpriteAnimation.travelDirection.LEFT_DOWN;
 			else
 				SpriteAnimation.currentTravelDirection = SpriteAnimation.travelDirection.RIGHT_DOWN;
+
 			SpriteAnimation.isStandingStill = true;
+
 
 			fire = true;
 		}
@@ -142,16 +165,14 @@ public class MeanCarrotController : MonoBehaviour{
 
 	//bool debugTestFireOnce = true;
 	void FireProjectiles(){
-
 		//if(debugTestFireOnce){
 			// create the projectile from prefab
 			Object projectile = AssetDatabase.LoadAssetAtPath("Assets/prefab/carrotProjectilePrefab.prefab", typeof(GameObject));
 			Instantiate(projectile,
-			            new Vector3(transform.position.x + 2, transform.position.y + 2, 0),
+			            new Vector3(transform.position.x, transform.position.y, 0f),
 			            Quaternion.identity);
 
 			//debugTestFireOnce = false;
-			fire = false;
 		//}
 	}
 }

@@ -20,8 +20,8 @@ public class ExplosionAnimation : MonoBehaviour{
 			index = index % framesPerAnimation;
 			spriteRenderer.sprite = sprites [index];
 			
-			//if(index >= 15)
-				//Destroy(this.gameObject);
+			if(index >= 15)
+				Destroy(this.gameObject);
 	}
 }
 

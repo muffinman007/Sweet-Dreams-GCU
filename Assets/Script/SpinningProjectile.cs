@@ -32,9 +32,10 @@ public class SpinningProjectile : MonoBehaviour {
 		//transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
 	
 		if(mainCharPosition == transform.position){
-			Object projectile = AssetDatabase.LoadAssetAtPath("Assets/prefab/SmallExplosion.prefab", typeof(GameObject));
-			Instantiate(projectile, transform.position, Quaternion.identity);
-			Destroy(this.gameObject);
+			Debug.Log(mainCharPosition.ToString() + " : " + transform.position.ToString());
+			Object explosion = AssetDatabase.LoadAssetAtPath("Assets/prefab/SmallExplosion.prefab", typeof(GameObject));
+			Instantiate(explosion, transform.position, Quaternion.identity);
+			DestroyImmediate(this.gameObject);
 		}
 	}	
 }
