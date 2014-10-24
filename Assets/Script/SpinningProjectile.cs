@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
+
 
 public class SpinningProjectile : MonoBehaviour {
 
@@ -30,12 +31,15 @@ public class SpinningProjectile : MonoBehaviour {
 
 		//float targetAngle = Mathf.Atan2 (moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
 		//transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
-	
-		if(mainCharPosition == transform.position){
-			Debug.Log(mainCharPosition.ToString() + " : " + transform.position.ToString());
+
+		if(AppoximateVectorEquality(mainCharPosition, transform.position)){
 			Object explosion = AssetDatabase.LoadAssetAtPath("Assets/prefab/SmallExplosion.prefab", typeof(GameObject));
 			Instantiate(explosion, transform.position, Quaternion.identity);
-			DestroyImmediate(this.gameObject);
+			DestroyImmediate(gameObject);
 		}
 	}	
+
+	bool AppoximateVectorEquality(Vector3 v1, Vector3 v2){
+		return (Mathf.Abs(v1.x - v2.x) <= 0.1) && (Mathf.Abs(v1.y - v2.y) <= 0.1);
+	}
 }

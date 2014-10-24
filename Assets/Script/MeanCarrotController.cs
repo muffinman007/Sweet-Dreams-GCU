@@ -25,7 +25,7 @@ public class MeanCarrotController : MonoBehaviour{
 	public float rateOfFireTime = 0.0f;
 	bool allowFiring = true;
 
-	const float distanceFromHero = 3.0f;
+	const float distanceFromHero = 4.0f;
 	bool fire = false;
 
  	//GameObject theBoy = GameObject.Find("boy");

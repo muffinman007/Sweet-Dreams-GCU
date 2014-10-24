@@ -16,12 +16,12 @@ public class ExplosionAnimation : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update (){
-			int index = (int)(Time.timeSinceLevelLoad * fps);
-			index = index % framesPerAnimation;
-			spriteRenderer.sprite = sprites [index];
-			
-			if(index >= 15)
-				Destroy(this.gameObject);
+		int index = (int)(Time.timeSinceLevelLoad * fps);
+		index = index % framesPerAnimation;
+		spriteRenderer.sprite = sprites [index];
+
+		if(index >= framesPerAnimation - 1)
+				Destroy(gameObject);
 	}
 }
 
