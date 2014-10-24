@@ -140,26 +140,18 @@ public class MeanCarrotController : MonoBehaviour{
 
 	}
 
-	bool debugTestFireOnce = true;
+	//bool debugTestFireOnce = true;
 	void FireProjectiles(){
 
-		if(debugTestFireOnce){
+		//if(debugTestFireOnce){
 			// create the projectile from prefab
 			Object projectile = AssetDatabase.LoadAssetAtPath("Assets/prefab/carrotProjectilePrefab.prefab", typeof(GameObject));
 			Instantiate(projectile,
 			            new Vector3(transform.position.x + 2, transform.position.y + 2, 0),
 			            Quaternion.identity);
-			Instantiate(projectile,
-			            new Vector3(transform.position.x + 1, transform.position.y + 4, 0),
-			            Quaternion.identity);
-			Instantiate(projectile,
-			            new Vector3(transform.position.x + 3.0f, transform.position.y + 2.5f, 0),
-			            Quaternion.identity);
-			Instantiate(projectile,
-			            new Vector3(transform.position.x + 2, transform.position.y + 1, 0),
-			            Quaternion.identity);
-			debugTestFireOnce = false;
-		}
 
+			//debugTestFireOnce = false;
+			fire = false;
+		//}
 	}
 }

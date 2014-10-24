@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 
 public class SpinningProjectile : MonoBehaviour {
@@ -7,17 +8,20 @@ public class SpinningProjectile : MonoBehaviour {
 	public float moveSpeed;
 	private Vector3 moveDirection;	
 
+	private Vector3 mainCharPosition;		// position of the main character at time of launch
+
 	// Use this for initialization
 	void Start(){
+		mainCharPosition = GameObject.Find ("boy").transform.position;
 	}	
 	
 	// Update is called once per frame
 	void Update (){
 		Vector3 currentPosition = transform.position;	
 
-		// move toward the hero
-		Vector3 moveToward = GameObject.Find("boy").transform.position;
-		moveDirection = moveToward - currentPosition;
+		// move toward the coordinate recorded in mainCharPosition
+		//Vector3 moveToward = GameObject.Find("boy").transform.position;
+		moveDirection = mainCharPosition - currentPosition;
 		moveDirection.z = 0;
 		moveDirection.Normalize();
 
@@ -26,5 +30,11 @@ public class SpinningProjectile : MonoBehaviour {
 
 		//float targetAngle = Mathf.Atan2 (moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
 		//transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
+	
+		if(mainCharPosition == transform.position){
+			Object projectile = AssetDatabase.LoadAssetAtPath("Assets/prefab/SmallExplosion.prefab", typeof(GameObject));
+			Instantiate(projectile, transform.position, Quaternion.identity);
+			Destroy(this.gameObject);
+		}
 	}	
 }
